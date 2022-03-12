@@ -1,3 +1,45 @@
+## 프록시 패턴
+
+- 프록시 패턴은 실제 객체를 대신하는 프록시 객체를 사용해 실제 객체의 생성이나 접근 등을 제어할 수 있도록 하는 디자인 패턴이다.
+
+-  프록시는 대리인이라는 의미로 대신 처리해줌을 의미한다.
+
+- 리소스가 큰 객체를 모든 것을 생성하기 보다는 필요할 때 생성하는데 사용될 수 있다.
+
+- 장점
+
+  사이즈가 큰 객체(이미지)가 로딩되기 전에 프록시를 통해 참조할 수 있다.
+
+  실제 객체의 메서드를 숨기고 인터페이스를 통해 노출시킬 수 있다.
+
+- 단점
+
+  객체가 많아지고 로직이 복잡해지므로 가독성이 떨어질 수가 있다.
+
+```kotlin
+class ProxyImage(val path: String) : Image {
+    val image: RealImage? = null
+    
+    override fun draw() {
+	    image?.let {
+			image = RealImage(path) // 최초 접근 시 객체 생성
+	    }
+        image.draw() // RealImage 객체에 위임
+    }
+}
+
+fun onScroll(start: Int, end: Int) {
+    //스크롤 시, 화면에 표시되는 이미지를 표시
+    for (i in start..end) {
+        val image = images.get(i)
+        image.draw()
+    }
+}
+```
+
+---
+
+
 ## 어댑터 패턴
 
 - 어댑터는 실생활에서 사용되는 언어이다. 충전기, 이어폰 잭 등이 존재한다.
