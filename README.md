@@ -179,3 +179,212 @@ public class SocketObjectAdapterImpl implements SocketAdapter{
     }
 }
 ```
+## 옵저버 패턴
+
+### 옵저버 패턴이란
+![image](https://user-images.githubusercontent.com/58967292/158032311-bcc93b91-3751-4541-a987-173edef54574.png)
+
+* 옵저버 패턴은 데이터의 변경이 발생했을 경우 상대 클래스나 객체에 의존하지 않으면서 데이터 변경을 통보하고자 할 때 유용하다.
+* 상태를 가지고 있는 주체 객체와 상태의 변경을 알아야 하는 관찰 객체가 존재하며 이들의 관계는 1:1 혹은 1:N 이 될 수 있는데 이 때, 객체들 사이에서 다양한 처리를 할 수 있도록 해주는 패턴을 의미한다
+
+* Subject`: Observer 를 알고 있는 주체입니다. 이는 Observer 를 등록하고 제거하는 데 필요한 인터페이스를 정의합니다.
+* Observer: Subject 에서 변화했다고 알렸을때 갱신해야하는데 필요한 인터페이스를 정의합니다.
+* ConcreteSubject: 객체에게 (Observer 들에게) 알려줘야할 상태를 저장하고, notify 해야할 함수를 만들도록 합니다.
+* ConcreteObserver: noti 를 받았을때 행동할 로직을 작성합니다.
+
+
+### 옵저버 패턴 장단점
+옵저버 패턴의 장단점
+장점
+1. 실시간으로 한 객체의 변경사항을 다른 객체에 전파할 수 있습니다.
+2. 느슨한 결합으로 시스템이 유연하고 객체간의 의존성을 제거할 수 있다.
+
+단점
+1. 너무 많이 사용하게 되면, 상태 관리가 힘들 수 있습니다
+2. 데이터 배분에 문제가 생기면 자칫 큰 문제로 이어질 수 있습니다.
+
+### 옵저버 패턴 예시
+```
+// Observer
+// Observer
+public interface Observer {
+    void noti();
+}
+
+// ConcreteObserver
+class Client1 implements Observer {
+    private String title;
+    public Client1(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public void noti() {
+        System.out.println("클라이언트 " + title + "에 변경사항이 반영됨");
+    }
+}
+
+// ConcreteObserver
+class Client2 implements Observer{
+    private String title;
+    public Client2(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public void noti() {
+        System.out.println("클라이언트 " + title + "에 변경사항이 반영됨");
+    }
+}
+```
+```
+// Subject
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObserver();
+}
+
+// ConcreteSubject
+class ConcreteSubject implements Subject {
+    List<Observer> clients = new ArrayList<>();
+
+    @Override
+    public void attach(Observer observer) {
+        this.clients.add(observer);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        this.clients.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver() {
+        for(Observer observer : clients) {
+            observer.noti();
+        }
+        System.out.println("[Subject] 메세지를 전송하였습니다.");
+    }
+}
+```
+
+## 중재자 패턴
+### 중재자 패턴이란?
+![image](https://user-images.githubusercontent.com/58967292/158032484-11bf9718-2c77-4219-ae8e-3f3997d82009.png)
+![image](https://user-images.githubusercontent.com/58967292/158032514-9e6e5e5a-3071-4a82-b4df-9b558b029b5f.png)
+![image](https://user-images.githubusercontent.com/58967292/158032569-efc2b80d-97ab-4b30-927d-3073304580db.png)
+
+* 모든 클래스간의 복잡한 로직(상호작용)을 캡슐화하여 하나의 클래스에 위임하여 처리하는 패턴이다.
+* 즉, M:N의 관계에서 M:1의 관계로 복잡도를 떨어뜨려 유지 보수 및 재사용의 확장성에 유리한 패턴이다.
+* 커뮤니케이션을 하고자 하는 객체가 있을 때 서로가 커뮤니케이션 하기 복잡한 경우 이를 해결해주고 서로 간 쉽게 해주며 커플링을 약화시켜주는 패턴이다.
+* 객체들간 커뮤니케이션 정의가 잘 돼있으나 복잡할 때(종합이 필요할 때) 사용한다.
+* Mediator: 여러 Component 중재해주는 인터페이스를 가지고 있는 추상 클래스 객체
+* ConcreteMediator: Component 객체들을 가지고 있으면서 중재해주는 역할을 하는 객체
+* Component: Mediator 객체에 의해서 관리 및 중재를 받을 기본 클래스 객체들
+
+### 장단점
+* 장점 
+  * 전체적인 연결관계를 이해하기 쉽다 (communication의 흐름을 이해하기 쉽다)
+  * 객체간의 통신을 위해 서로간에 직접 참조할 필요가 없게 한다
+  * 객체들 간 수정을 하지않고 관계를 수정할 수 있다
+* 단점
+  * 특정 application 로직에 맞춰져있기 때문에 다른 application에 재사용하기 힘들다 (옵저버 패턴의 경우 반대이다. 재사용성은 좋지만 연결관계가 복잡해지면 이해하기 어렵다)
+  * 중재자 패턴 사용 시 중재자 객체에 권한이 집중화되어 굉장히 크며 복잡해지므로, 설계 및 중재자 객체 수정 시 주의해야 한다
+
+### 예시
+```
+public interface Command {
+    void land();
+}
+```
+```
+public class Flight implements Command {
+    private Airport mediator;
+    
+    public Flight(Airport mediator) {
+        this.mediator = mediator;
+    }
+    
+    @Override
+    public void land() {
+        if (mediator.isLandingOK()) {
+            System.out.println("Successfylly Landed.");
+            mediator.setLandingStatus(true);
+        } else {
+            System.out.println("Waiting for Landing.");
+        }
+    }
+ 
+    public void getReady() {
+        System.out.println("Ready for landing");
+    }
+}
+```
+```
+public class Runway implements Command{
+    private  Airport mediator;
+    
+    public Runway( Airport mediator;) {
+        this.mediator =mediator
+         mediator.setLandingStatus(true);
+    }
+    
+    @Override
+    public void land() {
+        System.out.println("Lading permission granted.");
+        mediator.setLandingStatus(true);
+    }
+}
+```
+```
+public interface Airport {
+    public void registerRunway(Runway runway);
+    public void registerFilght(Flight flight);
+    public boolean isLandingOK();
+    public void setLandingStatus(boolean status);
+}
+ 
+```
+```
+public class IncheonAirport implements Airport{
+    private Flight flight;
+    private Runway runway;
+    public boolean land;
+    
+    @Override
+    public void registerRunway(Runway runway) {
+        this.runway = runway;
+    }
+ 
+    @Override
+    public void registerFilght(Flight flight) {
+        this.flight = flight;
+    }
+ 
+    @Override
+    public boolean isLandingOK() {
+        return land;
+    }
+ 
+    @Override
+    public void setLandingStatus(boolean status) {
+        land = status;
+    }
+}
+```
+```
+public class Main {
+    public static void main(String[] args) {
+        Airport incheonMediator = new IncheonAirport();
+        Flight cptJack = new Flight(atcMediator);
+        Runway runnerWay = new Runway(atcMediator);
+        incheonMediator.registerFilght(cptJack);
+        incheonMediator.registerRunway(runnerWay);
+        cptJack.getReady();
+        runnerWay.land();
+        cptJack.land();
+    }
+}
+```
+
