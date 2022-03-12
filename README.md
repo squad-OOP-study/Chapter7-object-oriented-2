@@ -1,1 +1,1 @@
-# Chapter7-object-oriented-2
+# 디자인패턴- part2
