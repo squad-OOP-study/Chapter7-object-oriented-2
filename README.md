@@ -26,35 +26,38 @@
 ### 상속 어뎁터
 ![image](https://user-images.githubusercontent.com/83396157/158041225-09502de3-31c4-4536-af5f-7db5b314876f.png)
 
-₩₩₩
+
+```Kotlin
+
 fun main() {
-     var hairdryer = HairDryer()
-     var convertedSocket = Adapter220vTo110v(hairdryer)
-     convertedSocket.powerOn()
-  }
+    var hairdryer = HairDryer()
+    var convertedSocket = Adapter220vTo110v(hairdryer)
+    convertedSocket.powerOn()
+}
 
-  fun connect(electronic110v: Electronic110v) {
-      electronic110v.powerOn()
-  }
+fun connect(electronic110v: Electronic110v) {
+    electronic110v.powerOn()
+}
 
 
-  interface Electronic110v {
-      fun powerOn()
-  }
+interface Electronic110v {
+    fun powerOn()
+}
 
-  interface Electronic220v {
-      fun connect()
-  }
+interface Electronic220v {
+    fun connect()
+}
 
-  class HairDryer : Electronic220v {
-      override fun connect() {
-          println("220v connected")
-      }
-  }
+class HairDryer : Electronic220v {
+    override fun connect() {
+        println("220v connected")
+    }
+}
 
-  class Adapter220vTo110v(var electronic220v: Electronic220v) : Electronic110v {
-      override fun powerOn() {
-          electronic220v.connect()
-      }
-  }
-₩₩₩
+class Adapter220vTo110v(var electronic220v: Electronic220v) : Electronic110v {
+    override fun powerOn() {
+        electronic220v.connect()
+    }
+}
+
+```
