@@ -32,13 +32,14 @@
    - 문제점 
      - 이미지 로딩 방식 변경시 ListUI 코드 변경.
      - 이미지 갯수에 따라 ListUI에서 Image관련 두 클래스 구분하는 조건문 갖게 된다.
-   - <img src="../그림7-16.jpg">
+   - <img src="https://user-images.githubusercontent.com/55780251/158041656-9125da15-f3d4-41ec-bd61-30b0e19c4f41.jpg">
+
 
 2. 프록시 패턴 적용
    - ListUI변경 없이 이미지 로딩 방식 교체 
    - 프록시 객체를 사용해 실제 객체의 생성이나 접근을 제어할 수 있는 패턴
    - ListUI클래스는 Image 타입을 사용하기 때문에 실제타입이 Proxy타입인지 아닌지 모른다.
-   - <img src="../그림7-17.jpg">
+   - <img src="https://user-images.githubusercontent.com/55780251/158041657-8cdda093-82bb-4a56-a657-2769dd7585c2.jpg">
   
     ```java
     public class ProxyImage implements Image {
@@ -81,7 +82,7 @@
     ```
 
     - 동작과정
-    - <img src="그림7-18.jpg">
+    - <img src="https://user-images.githubusercontent.com/55780251/158041658-281bf3c8-60cc-4951-bd5f-677ec4521468.jpg">
 
 > 프록시 패턴 적용할 때 고려할 점
 - 실제 객체를 누가 생성할 것인지 고려해야 한다.
@@ -118,9 +119,9 @@
 - 클라이언트가 요구하는 인터페이스와 재사용하려는 모듈의 인터페이스가 일치하지 않을 때 사용할 수 있는 패턴
   - 주로 외부 제공 모듈을 사용할 때 기존 인터페이스와 맞지 않은 경우 사용할 수 있다.
   - 기존
-    - <img src="그림7-20.jpg">
+    - <img src="https://user-images.githubusercontent.com/55780251/158041659-2f4019bd-76e9-4b19-b827-b5d945bc696c.jpg">
   - 어댑터 패턴 적용
-    - <img src="그림7-21.jpg">
+    - <img src="https://user-images.githubusercontent.com/55780251/158041662-83bb1e44-2239-491c-a6a3-c5526ccd19d9.jpg">
   - SearchService 인터페이스를 구현하고 있으므로 WebSearchRequestHandler 클래스 코드 수정 없이 DB기반 통합 검색에서 TolrClient를 이용한 통합 검색으로 구현을 변경할 수 있다. 
     ```java
     public class SearchServiceTolrAdapter implements SearchService {
