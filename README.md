@@ -15,6 +15,7 @@
 - 객체를 생성할때 한단계를 거치게 되므로, 빈번한 객체 생성이 필요한 경우 성능이 저하될 수 있다.
 
 
+
 # 어뎁터 패턴
 
 한 클래스의 인터페이스를 클라이언트에서 사용하고자하는 다른 인터페이스로 변환한다.어댑터를 이용하면 인터페이스 호환성 문제 때문에 같이 쓸 수 없는 클래스들을 연결해서 쓸 수 있다.
@@ -24,3 +25,36 @@
 
 ### 상속 어뎁터
 ![image](https://user-images.githubusercontent.com/83396157/158041225-09502de3-31c4-4536-af5f-7db5b314876f.png)
+
+₩₩₩
+fun main() {
+     var hairdryer = HairDryer()
+     var convertedSocket = Adapter220vTo110v(hairdryer)
+     convertedSocket.powerOn()
+  }
+
+  fun connect(electronic110v: Electronic110v) {
+      electronic110v.powerOn()
+  }
+
+
+  interface Electronic110v {
+      fun powerOn()
+  }
+
+  interface Electronic220v {
+      fun connect()
+  }
+
+  class HairDryer : Electronic220v {
+      override fun connect() {
+          println("220v connected")
+      }
+  }
+
+  class Adapter220vTo110v(var electronic220v: Electronic220v) : Electronic110v {
+      override fun powerOn() {
+          electronic220v.connect()
+      }
+  }
+₩₩₩
