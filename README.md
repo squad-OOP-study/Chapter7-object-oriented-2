@@ -125,6 +125,10 @@ fun onScroll(start: Int, end: Int) {
      - 정해진 시간 내에 응답하지 않을 경우 비동기 작업을 수행하거나 작업을 종료시킬 수 있도록 하는 등 제약 조건을 추가해야 함
        - 안드로이드에서는 특정 이벤트에 대해 5초 이상 응답하지 않으면 이용자에게 프로그램 종료 여부를 확인함
 
+#### 추천 참고 사이트
+- [옵저버패턴 떠먹여드립니다](https://velog.io/@haero_kim/%EC%98%B5%EC%A0%80%EB%B2%84-%ED%8C%A8%ED%84%B4-%EA%B0%9C%EB%85%90-%EB%96%A0%EB%A8%B9%EC%97%AC%EB%93%9C%EB%A6%BD%EB%8B%88%EB%8B%A4)
+- [디모의 옵저버패턴](https://www.youtube.com/watch?v=GxZWb5Whq7w)
+
 ---
 
 ## 미디에이터 패턴
